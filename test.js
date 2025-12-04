@@ -73,7 +73,11 @@ shipping_options: [
       cancel_url: "https://faeriafawn.uk/cancel.html",
     });
 
-   res.json({ url: session.url });
+   if (session.url) {
+  res.json({ url: session.url });
+} else {
+  res.status(500).json({ error: "Stripe did not return a session URL." });
+}
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
