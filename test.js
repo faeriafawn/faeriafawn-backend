@@ -18,6 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // server.js
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY); // replace with your real secret key
