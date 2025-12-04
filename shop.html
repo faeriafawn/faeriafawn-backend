@@ -243,28 +243,21 @@
   });
 
   // Checkout logic
- document.getElementById("checkout-button").addEventListener("click", async () => {
+// Checkout logic
+document.getElementById("checkout-button").addEventListener("click", async () => {
   try {
-    const response = await fetch("https://api.faeriafawn.uk/create-checkout-session", {
+    const response = await fetch("https://faeriafawn-backend.onrender.com/create-checkout-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ cart: cart })
     });
 
     const session = await response.json();
-
-    if (!session.id) {
-      alert("Checkout session could not be created.");
-      return;
-    }
-
-    const result = await stripe.redirectToCheckout({ sessionId: session.id });
-
-    if (result.error) {
-      alert(result.error.message);
-    }
-  } catch (err) {
-    alert("Something went wrong: " + err.message);
+    // Redirect to Stripe Checkout
+    window.location.href = session.url;
+  } catch (error) {
+    console.error("Error creating checkout session:", error);
+    alert("Something went wrong: " + error.message);
   }
 });
 </script>
