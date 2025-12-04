@@ -36,6 +36,9 @@ const products = {
   "billie-sox-stickers": { name: "Billie Sox Stickers", amount: 200 },
 };
 
+app.get("/", (req, res) => {
+  res.send("FaeriaFawn backend is running 🌼");
+});
 app.post("/create-checkout-session", async (req, res) => {
   const { cart } = req.body; 
   // cart should be an array of objects like: [{ productId: "faeriafawn-print", quantity: 2 }, ...]
@@ -61,7 +64,7 @@ app.post("/create-checkout-session", async (req, res) => {
     });
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card", "klarna", "apple pay", "google pay"],
+      payment_method_types: ["card", "klarna"],
       line_items,
       mode: "payment",
       shipping_address_collection: {
